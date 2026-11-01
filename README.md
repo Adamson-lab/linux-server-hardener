@@ -4,7 +4,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Platform: Ubuntu / Debian](https://img.shields.io/badge/Platform-Ubuntu%20%7F%20Debian-E95420?logo=ubuntu&logoColor=white)](https://ubuntu.com/)
 
-An automated, idempotent, production-grade Linux server hardening toolkit engineered to fortify cloud instances against modern threat vectors in alignment with CIS Benchmark baselines.
+An automated, idempotent, production-grade Linux server hardening toolkit engineered to fortify cloud instances against modern threat vectors, network spoofing, and kernel exploitation in alignment with CIS Benchmark baselines.
 
 ---
 
@@ -22,6 +22,7 @@ sequenceDiagram
     participant UFW as 03-Firewall
     participant F2B as 04-Fail2ban
     participant Upd as 05-Updates
+    participant Sys as 06-Sysctl
     
     Admin->>Script: Execute with sudo privileges
     Script->>Pre: Validate root UID & OS compatibility (Ubuntu/Debian)
@@ -34,4 +35,6 @@ sequenceDiagram
     F2B-->>Script: Intrusion prevention active
     Script->>Upd: Configure unattended-upgrades daily timer
     Upd-->>Script: Security updates automated
+    Script->>Sys: Apply sysctl kernel & network stack hardening
+    Sys-->>Script: SYN floods, spoofing & redirects mitigated
     Script-->>Admin: Pipeline Execution Complete
