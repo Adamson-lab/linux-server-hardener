@@ -68,4 +68,12 @@ else
     log_error "Updates module missing."
 fi
 
+# 6. Kernel & Network Stack Hardening
+if [[ -f "$MODULES_DIR/06-sysctl.sh" ]]; then
+    log_header "MODULE: KERNEL & NETWORK STACK HARDENING"
+    bash "$MODULES_DIR/06-sysctl.sh"
+else
+    log_error "Sysctl module missing."
+fi
+
 log_header "HARDENING PIPELINE EXECUTION COMPLETED SUCCESSFULLY"
