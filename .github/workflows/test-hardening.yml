@@ -1,0 +1,30 @@
+name: Test Linux Server Hardening
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  validate-hardening:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+
+    - name: Verify Environment & Shell Syntax
+      run: |
+        echo "Running pre-flight syntax checks on scripts..."
+        find scripts/ -name "*.sh" -type f | while read -r script; do
+          bash -n "$script"
+          echo "Syntax check passed for: $script"
+        done
+    
+    - name: Mock Hardening Dry-Run Simulation
+      run: |
+        echo "Simulating execution environment structure..."
+        mkdir -p /tmp/mock-root/etc/ssh
+        echo "PermitRootLogin yes" > /tmp/mock-root/etc/ssh/sshd_config
+        echo "Simulation workspace ready."
